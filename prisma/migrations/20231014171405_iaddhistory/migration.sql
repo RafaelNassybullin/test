@@ -1,0 +1,12 @@
+-- CreateEnum
+CREATE TYPE "Status" AS ENUM ('CREATED', 'CHANGEDNAME', 'CHANGEDIMAGE');
+
+-- CreateTable
+CREATE TABLE "History" (
+    "id" SERIAL NOT NULL,
+    "status" "Status" NOT NULL DEFAULT 'CREATED',
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "History_pkey" PRIMARY KEY ("id")
+);
