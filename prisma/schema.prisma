@@ -17,23 +17,24 @@ enum Status {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-
-  name      String   @unique
-  oldname   String   @default("")
-
-  image     String
-  oldimage  String   @default("")
-
+  id Int @id @default(autoincrement())
+  name String @unique
+  image String
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
 }
 
 model History {
   id        Int      @id @default(autoincrement())
-
+  userID    Int      @default(0)
   status    Status   @default(CREATED)
-  
+
+  oldname   String   @default("")
+  newname   String   @default("")
+
+  oldimage  String   @default("")
+  newimage  String   @default("")
+
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
 }

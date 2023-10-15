@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE "History" ALTER COLUMN "userID" DROP DEFAULT;
+
+-- AddForeignKey
+ALTER TABLE "History" ADD CONSTRAINT "History_userID_fkey" FOREIGN KEY ("userID") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
