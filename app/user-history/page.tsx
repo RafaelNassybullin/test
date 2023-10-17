@@ -1,13 +1,14 @@
 import Navbar from "@/components/navbar";
+import UserHistoryItem from "@/components/history-item-row";
+import apiCall from "@/lib";
 
-const UserHistory = () => {
+const UserHistory = async () => {
+  const { history } = await apiCall(`/api/history-users`);
+
   return (
     <>
       <Navbar />
-      сreated, changeName, changeImage
-      <p>Пользователь: John Wick был создан</p>
-      <p>Пользователь: John Wick с поменял аватарку</p>
-      <p>Пользователь: John Wick сменил имя на Harry Potter</p>
+      <UserHistoryItem histories={history} />
     </>
   );
 };
