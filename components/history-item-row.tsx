@@ -26,6 +26,7 @@ export default function HistoryItemRow({
             <ChangedName
               id={history.userID}
               name={history.newname}
+              image={history.oldimage}
               date={history.createdAt}
               oldname={history.oldname}
             />

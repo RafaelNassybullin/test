@@ -24,12 +24,15 @@ export const ChangedImage: FC<IChagedImage> = ({
     <ListItemWrapper className={"cursor-pointer"}>
       <Link
         href={`/user-history/${id}`}
-        className="flex items-center text-[20px] hover:text-zinc-700 text-zinc-700"
+        className="flex items-center w-full justify-between text-[20px] hover:text-zinc-700 text-zinc-700"
       >
-        Пользователь: <ProfileImage image={oldimage} alt={newname} />
-        <Name name={newname} />
-        поменял изображение профиля на
-        <ProfileImage image={newimage} alt={newname} />
+        <div className="flex items-center">
+          Пользователь: <ProfileImage image={oldimage} alt={newname} />
+          <Name name={newname} />
+          поменял(-а) изображение профиля на
+          <ProfileImage image={newimage} alt={newname} />
+        </div>
+
         <DateComponent date={date} />
       </Link>
     </ListItemWrapper>

@@ -5,6 +5,7 @@ interface IDate {
 }
 
 export const DateComponent: FC<IDate> = ({ date }) => {
+  
   const dateRU = new Date(date).toLocaleDateString("ru-RU", {
     weekday: "long",
     year: "numeric",

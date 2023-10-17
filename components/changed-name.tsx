@@ -8,11 +8,18 @@ import { FC } from "react";
 interface IChangedName {
   id: number;
   name: string;
+  image: string;
   date: Date | string;
   oldname: string;
 }
 
-export const ChangedName: FC<IChangedName> = ({ id, name, date, oldname }) => {
+export const ChangedName: FC<IChangedName> = ({
+  id,
+  name,
+  date,
+  image,
+  oldname,
+}) => {
   return (
     <ListItemWrapper className={"cursor-pointer"}>
       <Link
@@ -20,9 +27,9 @@ export const ChangedName: FC<IChangedName> = ({ id, name, date, oldname }) => {
         className="flex items-center w-full justify-between text-[20px] hover:text-zinc-700 text-zinc-700"
       >
         <div className="flex items-center">
-          Пользователь: <ProfileImage image={oldname} alt={name} />
-          <Name name={name} />
-          сменил имя на
+          Пользователь: <ProfileImage image={image} alt={name} />
+          <Name name={oldname} />
+          сменил(-а) имя на
           <Name name={name} />
         </div>
         <DateComponent date={date} />
