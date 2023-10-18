@@ -59,7 +59,7 @@ export async function GET(request: NextRequest) {
       })
     }
 
-    return NextResponse.json({ status: "success", user });
+    return NextResponse.json({ status: "success" });
 
   } catch {
     return NextResponse.json({
