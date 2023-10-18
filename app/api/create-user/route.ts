@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
 
     const nameExist = await prisma.user.findUnique({
       where: {
-        name
+        name: name.trim()
       }
     })
 

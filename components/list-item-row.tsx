@@ -4,25 +4,29 @@ import { Name } from "./name";
 import { DateComponent } from "./date";
 import { Edit } from "./edit";
 import { FC } from "react";
+import { ModalPopup } from "./modal-popup";
 
 interface IListItemRow {
+  id: number;
   name: string;
   image: string;
   date: Date | string;
 }
 
-export const ListItemRow: FC<IListItemRow> = ({ name, image, date }) => {
+export const ListItemRow: FC<IListItemRow> = ({ id, name, image, date }) => {
   return (
-    <UserListWrapper>
-      <div className="flex text-[20px] items-center">
-        <p className="mr-5">Пользователь:</p>
-        <ProfileImage image={image} alt={name} />
-        <Name name={name} />
-      </div>
-      <p className="text-[20px]">
-        Создан: <DateComponent date={date} />
-      </p>
-      <Edit />
-    </UserListWrapper>
+    <>
+      <UserListWrapper>
+        <div className="flex text-[20px] items-center">
+          <p className="mr-5">Пользователь:</p>
+          <ProfileImage image={image} alt={name} />
+          <Name name={name} />
+        </div>
+        <p className="text-[20px]">
+          Создан: <DateComponent date={date} />
+        </p>
+        <Edit id={id}/>
+      </UserListWrapper>
+    </>
   );
 };

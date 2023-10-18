@@ -11,6 +11,7 @@ const UserList = async () => {
       <Navbar />
       {users.map((user: User) => (
         <ListItemRow
+          id={user.id}
           name={user.name}
           image={user.image}
           date={user.createdAt}
