@@ -1,35 +1,48 @@
 import { prisma } from "@/_base"
+import { nanoid } from "nanoid";
 import { NextRequest, NextResponse } from "next/server";
+import path from "path";
+import { writeFile } from 'fs/promises';
 
-//update user api route
-export async function GET(request: NextRequest) {
-  // const id = request.nextUrl.searchParams.get('id');
+export async function POST(request: NextRequest) {
+
   try {
+    const data = await request.formData()
 
-    const id = 6
-    const name = "Roxyyy"
-    const img = ""
+    const id = data.get('id') as string;
+    const name = data.get("name") as string;
+    const file: File | null | string = data.get('file');
 
     const user = await prisma.user.findUnique({
       where: {
-        id: id
+        id: Number(id)
       }
     })
 
     if (user?.name !== name) {
+
+      const nameExist = await prisma.user.findUnique({
+        where: {
+          name: name.trim()
+        }
+      })
+
+      if (nameExist) {
+        return NextResponse.json({ status: "nameExist" });
+      }
+
       await prisma.user.update({
         where: {
-          id: id
+          id: Number(id)
         },
         data: {
           name: name,
-          image: "1.jpg"
         },
       })
 
       await prisma.history.create({
         data: {
-          userID: id,
+          userID: Number(id),
           status: "CHANGEDNAME",
           oldname: user?.name,
           newname: name,
@@ -38,23 +51,62 @@ export async function GET(request: NextRequest) {
       })
     }
 
+    if (file !== "notchanged" && file) {
+      if (typeof file !== "string") {
 
-    if (user?.image !== img) {
+        const bytes = await file.arrayBuffer();
+        const buffer = Buffer.from(bytes);
+
+        const image = `image-${nanoid()}.jpg`;
+
+        const rootDir = path.join(
+          process.env.ROOT_DIR || process.cwd(),
+          `/public/image/${image}`
+        )
+
+        await writeFile(rootDir, buffer);
+
+        await prisma.user.update({
+          where: {
+            id: Number(id)
+          },
+          data: {
+            image
+          }
+        })
+
+        await prisma.history.create({
+          data: {
+            userID: user?.id,
+            status: "CHANGEDIMAGE",
+            oldname: user?.name,
+            newname: name,
+            oldimage: user?.image,
+            newimage: image
+          }
+        })
+      }
+
+    }
+
+    if (file === "deleted") {
       await prisma.user.update({
         where: {
-          id: id
+          id: Number(id)
         },
         data: {
-          image: img
-        },
+          image: ""
+        }
       })
+
       await prisma.history.create({
         data: {
-          userID: id,
+          userID: user?.id,
           status: "CHANGEDIMAGE",
-          newimage: img,
+          oldname: user?.name,
           newname: name,
-          oldimage: user?.image
+          oldimage: user?.image,
+          newimage: ""
         }
       })
     }
@@ -62,10 +114,10 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ status: "success" });
 
   } catch {
+
     return NextResponse.json({
       status: "error",
       message: "something went wrong",
-      // category: []
     });
   }
 }

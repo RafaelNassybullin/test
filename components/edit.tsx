@@ -1,25 +1,33 @@
 "use client";
 import { PencilSquareIcon } from "@heroicons/react/24/solid";
 import { ModalPopup } from "./modal-popup";
-import { useState } from "react";
+import { FC, useState } from "react";
 
-export const Edit = ({ id }: any) => {
-  const [state, setState] = useState(false);
+interface IEdit {
+  id: number;
+  userName: string;
+  image: string;
+}
+
+export const Edit: FC<IEdit> = ({ id, userName, image }) => {
+  const [modalState, setModalState] = useState(false);
 
   const close = () => {
-    setState(false);
+    setModalState(false);
   };
 
   return (
     <>
       <div
-        onClick={() => setState(true)}
+        onClick={() => setModalState(true)}
         className="flex items-center cursor-pointer hover:text-purple-500"
       >
         <PencilSquareIcon className="w-[30px] h-[30px] mr-3" />
         <p>Ред.</p>
       </div>
-      <ModalPopup id={id} state={state} close={close} />
+      {modalState && (
+        <ModalPopup id={id} userName={userName} image={image} close={close} />
+      )}
     </>
   );
 };

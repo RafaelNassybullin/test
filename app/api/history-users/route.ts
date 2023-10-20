@@ -1,8 +1,7 @@
 import { prisma } from "@/_base"
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-//get history api route
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const history = await prisma.history.findMany({
       orderBy: [{

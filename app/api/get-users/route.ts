@@ -1,9 +1,8 @@
 import { prisma } from "@/_base"
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-//get user api route
-export async function GET(request: NextRequest) {
-  // const category = request.nextUrl.searchParams.get('category');
+export async function GET() {
+
   try {
 
     const users = await prisma.user.findMany({

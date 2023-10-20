@@ -4,7 +4,6 @@ import { Name } from "./name";
 import { DateComponent } from "./date";
 import { Edit } from "./edit";
 import { FC } from "react";
-import { ModalPopup } from "./modal-popup";
 
 interface IListItemRow {
   id: number;
@@ -25,7 +24,7 @@ export const ListItemRow: FC<IListItemRow> = ({ id, name, image, date }) => {
         <p className="text-[20px]">
           Создан: <DateComponent date={date} />
         </p>
-        <Edit id={id}/>
+        <Edit id={id} userName={name} image={image} />
       </UserListWrapper>
     </>
   );
